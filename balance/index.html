@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yusha</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+    
+  <link rel="stylesheet" href="a_button.css">
+  <script src="a_button.js" defer></script>
+
+  <link rel="stylesheet" href="b_bal_info.css">
+  <link rel="stylesheet" href="c_skeleton_card.css">
+  <link rel="stylesheet" href="d_upload_prof.css">
+  <script src="d_upload_prof.js" defer></script>
+  <link rel="stylesheet" href="e_bal_history.css">
+  <script src="e_bal_history.js" defer></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      background-color: #151827;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      color: #ffffff;
+      min-width: 350px;
+    }
+.output_box_cl {
+  display: none;
+  margin: 0;
+  padding: 40px;
+  background-color: #0f121b;
+  z-index: 9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  min-width: 350px;
+  min-height: 400px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.output_box_cl.show {
+  display: flex;
+}
+.output_pre_cl {
+  padding: 20px;
+  border: 2px solid #23293b;
+  border-radius: 10px;
+  color: red;
+}
+    .main_container_cl {
+      z-index: 1;
+      min-width: 250px;
+      min-height: 500px;
+      width: 100%;
+      padding: 20px 20px 0 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .main_container_cl {
+        width: 80%;
+        min-width: 300px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .main_container_cl {
+        min-width: 600px;
+        width: 50%;
+      }
+    }
+
+    .gap20px_cl {
+      height: 15px;
+    }
+
+  </style></head>
+
+<body>
+      <!-- SKELETON UI-->
+      <div class="skeleton_card_container_cl" id="skeleton_card_container_cl">
+        <div class="skeleton_card">
+            <div class="skeleton skeleton_image"></div>
+        </div>
+        <div class="skeleton_card">
+            <div class="skeleton_footer">
+                <div class="skeleton skeleton_button"></div>
+                <div class="skeleton skeleton_button" style="width: 120px;"></div>
+            </div></div>
+        <div class="skeleton_card">
+            <div class="skeleton skeleton_image"></div>
+        </div>
+      </div>
+    
+    <div id="output_box_id" class="output_box_cl"><!-- z index 9-->
+      <pre id="output_pre_id" class="output_pre_cl"></pre> 
+    </div>
+    
+    
+    
+  <div class="main_container_cl">
+
+    <div class="bal_info_container_cl">
+        <div class="success_icon_cl" id="success_icon_id">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 11.917 9.724 16.5 19 7.5"/>
+            </svg>
+        </div>
+        
+        <div class="user_infotext_cl" id="user_infotext_id">null - 0000000000</div>
+        <div class="amount_text_cl" id="amount_text_id">₹0</div>
+        <div class="user_infotext_cl" id="earned_balance_id"></div>
+    </div>
+        
+    <div class="gap20px_cl"></div>
+    
+    <!-- Available Buttun options -->
+    <div class="over_available_buttons_cl">
+      <div class="available_buttons_cl">
+        <div class="upload_button_cl button_item" onclick="upload_section(0)">
+          Upload
+        </div>
+        <div class="history_button_cl button_item" onclick="history_section(1)">
+          History
+        </div>
+        <!-- Sliding mask indicator -->
+        <div class="magic_indicator" id="magicIndicator">
+          <div class="indicator_text_wrapper" id="indicatorTextWrapper">
+            <div class="button_clone">Upload</div>
+            <div class="button_clone">History</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+        <!-- CUSTOM ALERT DIV -->
+    <div id="img_selection_alert_box" class="img_selection_hidden"></div>
+    <div class="gap20px_cl"></div>
+    <div class="upload_prof_container_cl" id="upload_prof_container_id">
+    <!-- MAIN CONTENT (Drag & Drop) -->
+    <div id="img_selection_drop_area" class="img_selection_drop_container">
+        <svg id="img_selection_upload_icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01"/>
+        </svg>
+
+        <p class="img_selection_title">Drop Screenshot, or click below</p>
+        <p class="img_selection_subtitle">Max. File Size: <span>3MB</span></p>
+
+        <button type="button" class="img_selection_btn" onclick="document.getElementById('img_selection_dropzone_file').click()">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+            </svg>
+            Browse file
+        </button>
+
+        <input id="img_selection_dropzone_file" type="file" accept="image/*" />
+    </div>
+    </div>
+
+    <!-- MAIN POP-UP PREVIEW MODAL -->
+    <div id="img_selection_modal" class="img_selection_modal img_selection_hidden">
+        <div class="img_selection_modal_content">
+            
+            <!-- Close Button (Always positioned above image & text) -->
+            <button id="img_selection_close_modal_btn" class="img_selection_icon_btn">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+
+            <div class="img_selection_modal_layout">
+                <!-- Left Box (Square Image) -->
+                <div class="img_selection_left_panel">
+                    <div class="img_selection_image_container">
+                        <img id="img_selection_preview_image" src="" alt="Image Preview">
+
+                        <!-- Expand Icon -->
+                        <button id="img_selection_expand_btn" title="View Full Size">
+                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <p id="img_selection_file_name">Image Preview</p>
+                </div>
+
+                <!-- Right Box (Text, Clock, & Upload) -->
+                <div class="img_selection_right_panel">
+                    
+                    <!-- Top Section -->
+                    <div>
+                        <h2 class="img_selection_wait_text" id="main_wait_text">Please wait for payment confirmation after upload</h2>
+                    </div>
+                    
+                    <!-- Middle Section (Clock Animation) -->
+                    <div id="img_selection_loading_clock" class="img_selection_hidden">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path class="clock-hand" d="M12 6v6l4 2"></path>
+                        </svg>
+                    </div>
+
+                    <!-- Bottom Section (Button OR Progress Bar) -->
+                    <div class="bottom_controls">
+                        <!-- Standard Upload Button -->
+                        <button id="img_selection_upload_btn" class="img_selection_btn img_selection_btn_primary" onclick="upload_img()">
+                            Upload
+                        </button>
+
+                        <!-- Progress Bar (Replaces Button on Click) -->
+                        <div id="progressContainer">
+                            <div class="dot" id="dot1"></div>
+                            <div class="line" id="line1"></div>
+                            <div class="dot" id="dot2"></div>
+                            <div class="line" id="line2"></div>
+                            <div class="dot" id="dot3"></div>
+                            <div class="line" id="line3"></div>
+                            <div class="dot" id="dot4"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FULL SIZE PREVIEW MODAL -->
+    <div id="img_selection_full_size_modal" class="img_selection_modal img_selection_hidden">
+        <button id="img_selection_close_full_size_btn" class="img_selection_icon_btn">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <img id="img_selection_full_size_image" src="" alt="Full Size Preview">
+    </div>
+    <div class="bal_history_container_cl" id="bal_history_container_id"></div>
+    
+    
+<!-- Image Modal -->
+<div class="img_preview_cl" id="img_preview_id" onclick="close_img_preview(event)">
+  <div class="img_preview_content_cl">
+    <button class="close_img_preview_btn" onclick="close_img_preview(event)">&times;</button>
+    <img id="full_img_preview_id" class="full_img_preview_cl" src="" alt="Full size receipt">
+  </div>
+</div>
+  
+  <script>
+  /*
+  img_preview_id
+  full_img_preview_id
+  */
+    let user_data = null;
+    let web_para = {
+      "first_load": true,
+      "skeleton_loader": true,
+      "active_button_is": null,
+      "close_upload_card_number": false
+    };
+function hexToString(hex) {
+    let str = '';
+    for (let i = 0; i < hex.length; i += 2) {
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    }
+    return str;
+}
+const whereis = new URLSearchParams(window.location.search);
+const incriptedata = whereis.get("inc") || '7b7d';
+const jsonString = hexToString(incriptedata);
+const user_info = JSON.parse(jsonString);
+    
+    const target_auth_string = `${user_info["user_id"]}-${user_info["temp_password"]}`;
+    
+    
+    async function onload_fetch_user_data() {
+      const output_box_id = document.getElementById("output_box_id");
+      const output_pre_id = document.getElementById("output_pre_id");
+      const eze_get_data_api = 'https://ozxvulrbqxkvivvvupsn.supabase.co/functions/v1/eze_get_data_api';
+      
+      try {
+        const response = await fetch(eze_get_data_api, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sb_key}`
+          },
+          body: JSON.stringify({ user_id: target_auth_string})
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const user_data_json = await response.json();
+        user_data = user_data_json
+        //output_pre_id.textContent = JSON.stringify(user_data_json, null, 2);
+        if (Object.keys(user_data_json).length > 0) {
+          show_updated_user_data();
+        }
+        //show_user_data();
+        
+      } catch (error) {
+        output_box_id.classList.add("show");
+        output_pre_id.textContent = error.message;
+        remove_skeleton_card_container_cl();
+      }}
+    
+    
+  function show_updated_user_data () {
+    document.getElementById("user_infotext_id").innerHTML = `${user_data["name_is"]} - ${user_info["user_id"]}`;
+    document.getElementById("amount_text_id").innerHTML = `₹${user_data["balance"]}`;
+
+    if ("earned_balance" in user_data) {
+  document.getElementById("earned_balance_id").innerHTML = `Other Bal: ₹${user_data.earned_balance}`;
+  }
+//"earned_balance": 23,
+    if (web_para.skeleton_loader == true){
+      web_para.skeleton_loader = false;
+      remove_skeleton_card_container_cl();
+    }
+    if (web_para.first_load == true){
+      web_para.first_load = false;
+      manage_active_button();
+    }
+    //renderHistoryHTML();
+}
+
+function manage_active_button() {
+  let padding_length = user_data?.payment_history?.of_padding?.length || 0;
+    if (padding_length == 0) {
+        upload_section(0);
+    } else {
+        history_section(1);
+    }
+}
+
+  function update_user_live_data () {
+    show_updated_user_data(); // update balance box first
+    
+    if (user_data?.supa?.update_type == "daily_data_update") {
+      if (web_para?.active_button_is == "bal_history_container_id") {
+        if (isUploading) return; 
+        history_section(1);
+      }
+      return;
+    }
+    if (user_data?.supa?.update_type == "conf_payment_proof_upload") {
+      if (isUploading) return; 
+      history_section(1);
+      close_img_preview();
+      return;
+    }
+    if (user_data?.supa?.update_type == "payment_proof_upload"){
+      if (web_para?.close_upload_card_number !== true) {
+        window.location.reload();
+        return;
+      }
+      isUploading = undefined;
+      closeFullSizeModal();
+      closeMainModal();
+      manage_active_button();
+      return;
+    }
+    /*
+    if (user_data?.action_type == web_para?.upload_card_number){
+show_user_data();
+history_section(1);
+isUploading = undefined;
+closeFullSizeModal();
+closeMainModal();
+}
+    */
+    if (isUploading) return; 
+    if (web_para?.active_button_is == "bal_history_container_id") {
+        history_section(1);
+        close_img_preview();
+      }
+  }
+  
+  
+  
+  function success_icon_startWave() {
+    const success_icon_id = document.getElementById('success_icon_id');
+    success_icon_id.style.backgroundColor = '#28c76f';
+    success_icon_id.classList.add('animate-wave');
+  }
+  function success_icon_stopWave() {
+    const success_icon_id = document.getElementById('success_icon_id');
+    success_icon_id.style.backgroundColor = '#FF0000';
+    success_icon_id.classList.remove('animate-wave');
+  }
+  
+
+const access_url = 'https://ozxvulrbqxkvivvvupsn.supabase.co';
+const client = supabase.createClient(access_url, sb_key);
+//const dataBox = document.getElementById('output_pre_id');
+const user_channel = client.channel(target_auth_string);
+
+    user_channel
+      .on(
+        'broadcast',
+        { event: 'data_updated' },
+        (payload) => {
+          user_data = payload.payload;
+          update_user_live_data();
+        }
+      )
+      .subscribe((status, err) => {
+        switch (status) {
+          case 'SUBSCRIBED':
+            success_icon_startWave();
+            break;
+          case 'CLOSED':
+            success_icon_stopWave();
+            break;
+          case 'CHANNEL_ERROR':
+            success_icon_id.style.backgroundColor = '#C0C0C0';
+            success_icon_stopWave();
+            break;
+          case 'TIMED_OUT':
+            success_icon_stopWave();
+            break;
+        }
+      });
+    
+    function remove_skeleton_card_container_cl() {
+    const remove_skeleton_box = document.getElementById("skeleton_card_container_cl");
+    if (remove_skeleton_box) {
+      remove_skeleton_box.remove();
+    }
+  }
+  onload_fetch_user_data();
+  </script>
+</body></html>
