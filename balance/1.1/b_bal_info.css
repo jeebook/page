@@ -1,0 +1,75 @@
+.bal_info_container_cl {
+      background-color: #141a2a;
+      min-height: 200px;
+      border-radius: 20px;
+      border: 5px solid #1b2137;
+      box-shadow: 0 0 0 1px #31384b;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+.success_icon_cl {
+  width: 35px;
+  height: 35px;
+  background-color: #28c76f;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+.success_icon_cl svg {
+  width: 25px;
+  height: 25px;
+}
+.user_infotext_cl {
+  font-size: 15px;
+  color: #d1d1db;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+.amount_text_cl {
+  font-size: 30px;
+  font-weight: 500;
+  margin: 0;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+
+        /* Wave setup (Animation removed from here) */
+        .success_icon_cl::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #28c76f;
+            border-radius: 50%;
+            z-index: -1; 
+            opacity: 0; /* Hidden by default */
+        }
+
+        /* Class to trigger the animation */
+        .success_icon_cl.animate-wave::after {
+            animation: wave-animation 2s infinite ease-out; 
+        }
+
+        /* Wave Keyframes */
+        @keyframes wave-animation {
+            0% {
+                transform: scale(1);
+                opacity: 0.7; 
+            }
+            100% {
+                transform: scale(2.2); 
+                opacity: 0; 
+            }
+        }
