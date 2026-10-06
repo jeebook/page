@@ -1,0 +1,276 @@
+/*
+img_preview_cl
+full_img_preview_id
+*/
+
+.bal_history_container_cl {
+  display: none;
+  
+  flex-direction: column;
+  min-height: 400px;
+  color: white;
+  flex: 1;
+  width: 100%;
+  
+}
+        .clock-icon {
+            width: 150px;
+            height: 150px;
+            fill: #222222;
+            transform-origin: center;
+            /* Font Awesome defaults their animations to 2s ease-in-out infinite */
+            animation: fa-jello 2s ease-in-out infinite; 
+        }
+
+@keyframes simpleFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* A class you can attach to anything you want to fade in */
+.fade-in {
+    animation: simpleFade 0.4s ease-in forwards;
+}
+        /* Font Awesome's actual squish/stretch Jello math */
+        @keyframes fa-jello {
+            0% {
+                transform: scale(1, 1);
+            }
+            12% {
+                transform: scale(1.15, 0.85);
+            }
+            24% {
+                transform: scale(0.85, 1.15);
+            }
+            36% {
+                transform: scale(1.05, 0.95);
+            }
+            48% {
+                transform: scale(0.95, 1.05);
+            }
+            60% {
+                transform: scale(1.02, 0.98);
+            }
+            72% {
+                transform: scale(0.98, 1.02);
+            }
+            100% {
+                transform: scale(1, 1);
+            }
+        }
+
+.history_container_cl {
+  width: 100%; /* history-container */
+}
+/* history-container bal_history_container_id
+bal_history_container_cl*/
+        :root {
+          --bg-color: #0f0f0f;
+          --border-color: #333333;
+          --text-main: #f5f5f5;
+          --text-muted: #9aa0a6;
+          
+          /* Badges colors */
+          --badge-confirmed-bg: #c9f0d4;
+          --badge-confirmed-text: #0e6333;
+          --badge-pending-bg: #424242;
+          --badge-pending-text: #e0e0e0;
+          --badge-canceled-bg: #4a1919;
+          --badge-canceled-text: #ff8a80;
+          --badge-purchased-bg: #103154;
+          --badge-purchased-text: #82b1ff;
+          
+          /* Button colors */
+          --btn-bg: #2a2a2a;
+          --btn-hover: #444444;
+        }
+        .app-container {
+            width: 100%;
+        }
+
+
+        /* Card Styles with Animation defaults */
+        .card {
+            display: none;
+            align-items: stretch;
+            gap: 16px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .card:last-child {
+            border-bottom: none;
+        }
+
+        /* The class added via JS to trigger the top-to-bottom animation */
+        .card.animate-in {
+            display: flex;
+            animation: slideDownFade 0.4s ease forwards;
+        }
+
+        @keyframes slideDownFade {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Image styling */
+        .card-img {
+            width: 75px;
+            height: 75px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #2a2a2a;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: opacity 0.2s;
+            -webkit-tap-highlight-color: transparent; 
+            outline: none;
+        }
+
+        .card-img:hover {
+            opacity: 0.5;
+        }
+
+        /* Content Layout */
+        .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 75px;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        /* Typography */
+        .utr-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: capitalize;
+        }
+
+        .utr-number {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .date-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1;
+        }
+
+        .date-row svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--text-muted);
+        }
+
+        /* Right Section (Amount & Status) */
+        .amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1;
+        }
+
+        .clock-icon {
+            width: 25px;
+            height: 25px;
+            fill: var(--text-main);
+        }
+
+        /* Badges */
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .badge.confirmed {
+            background-color: var(--badge-confirmed-bg);
+            color: var(--badge-confirmed-text);
+        }
+
+        .badge.pending {
+            background-color: var(--badge-pending-bg);
+            color: var(--badge-pending-text);
+        }
+
+        .badge.canceled {
+            background-color: var(--badge-canceled-bg);
+            color: var(--badge-canceled-text);
+        }
+
+        .badge.purchased {
+            background-color: var(--badge-purchased-bg);
+            color: var(--badge-purchased-text);
+        }
+
+        /* Modal Styles */
+        .img_preview_cl {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .img_preview_cl.active {
+            display: flex;
+        }
+
+        .img_preview_content_cl {
+            position: relative;
+            max-width: 70%;
+            max-height: 70%;
+        }
+
+        .full_img_preview_cl {
+            max-width: 70vw;
+            max-height: 70vh;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+        }
+
+        .close_img_preview_btn {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 32px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
