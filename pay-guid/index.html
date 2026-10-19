@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Guide</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="guide.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        tgblue: {
+                            DEFAULT: '#2AABEE',
+                            dark: '#229ED9',
+                            light: '#5BBEF2'
+                        },
+                        darkbg: '#0F172A',
+                        cardbg: '#1E293B',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0F172A;
+            color: #F8FAFC;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F172A; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+
+        .accordion-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.35s ease-in-out;
+        }
+        .accordion-item.is-active .accordion-content {
+            grid-template-rows: 1fr;
+        }
+        .accordion-item.is-active .chevron-icon {
+            transform: rotate(180deg);
+        }
+        .accordion-item.is-active .accordion-header {
+            background-color: rgba(30, 41, 59, 0.5);
+            border-bottom-color: rgba(51, 65, 85, 0.5);
+        }
+
+        .main_container_cl {
+            z-index: 1;
+            min-width: 250px;
+            min-height: 500px;
+            width: 100%;
+            padding: 20px 20px 0 20px;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .main_container_cl {
+                width: 80%;
+                min-width: 300px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .main_container_cl {
+                min-width: 600px;
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col items-center bg-darkbg selection:bg-tgblue selection:text-white">
+
+    <div class="main_container_cl">
+        <!-- Header Section -->
+        <header class="w-full text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+                Payment <span class="text-tgblue">Guide</span>
+            </h1>
+        </header>
+
+        <main id="accordion-container" class="w-full flex flex-col gap-6">
+
+            <!-- Topic 1: Why Manual Verification? -->
+            <div class="accordion-item glass-card rounded-3xl overflow-hidden shadow-2xl relative group border border-slate-700/50">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl -z-10 group-hover:bg-amber-500/10 transition-colors duration-700 pointer-events-none"></div>
+                
+                <button class="accordion-header w-full flex items-center justify-between p-6 md:p-8 cursor-pointer text-left transition-colors border-b border-transparent" onclick="toggleAccordion(this)">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-2xl shadow-inner border border-amber-500/20 shrink-0">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-semibold">Why Manual Payment?</h2>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center border border-slate-700 shrink-0 transition-colors group-hover:text-white">
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300 chevron-icon"></i>
+                    </div>
+                </button>
+
+                <div class="accordion-content">
+                    <div class="overflow-hidden">
+                        <div class="p-6 md:p-8 pt-2 md:pt-4">
+                            <div>
+                                <ul class="text-slate-300 text-sm md:text-base leading-relaxed space-y-4 mb-5 list-none">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-check text-emerald-400 mt-1 text-sm"></i>
+                                        <span><strong>No Hidden Gateway Fees:</strong> Automated payment gateways (like Razorpay or Stripe) charge up to 2-3% per transaction plus setup costs.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa-solid fa-check text-emerald-400 mt-1 text-sm"></i>
+                                        <span><strong>Cheaper Study Materials:</strong> By accepting direct UPI and manually verifying payments, we bypass extra fees entirely to keep notes affordable for all students.</span>
+                                    </li>
+                                </ul>
+                                <div class="mt-5 flex flex-wrap gap-3">
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-sm font-medium text-emerald-400">
+                                        <i class="fa-solid fa-lock text-xs"></i> 100% Safe & Secure
+                                    </span>
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-sm font-medium text-tgblue">
+                                        <i class="fa-solid fa-bolt text-xs"></i> Fast Verification
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2: How to Add Balance -->
+            <div class="accordion-item glass-card rounded-3xl overflow-hidden shadow-2xl relative group border border-slate-700/50">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-tgblue/5 rounded-full blur-3xl -z-10 group-hover:bg-tgblue/10 transition-colors duration-700 pointer-events-none"></div>
+                
+                <button class="accordion-header w-full flex items-center justify-between p-6 md:p-8 cursor-pointer text-left transition-colors border-b border-transparent" onclick="toggleAccordion(this)">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-slate-800 text-tgblue flex items-center justify-center text-xl shadow-inner border border-slate-700 shrink-0">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-semibold">How to Add Balance</h2>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center border border-slate-700 shrink-0 transition-colors group-hover:text-white">
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300 chevron-icon"></i>
+                    </div>
+                </button>
+                
+                <div class="accordion-content">
+                    <div class="overflow-hidden">
+                        <div class="p-6 md:p-8 pt-2 md:pt-4">
+                            <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:ml-6 md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-tgblue before:via-slate-700 before:to-transparent">
+                                
+                                <div class="relative flex items-start gap-6">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-tgblue text-white flex items-center justify-center font-bold text-lg shrink-0 z-10 shadow-[0_0_15px_rgba(42,171,238,0.4)]">1</div>
+                                    <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 w-full hover:border-slate-600 transition-colors">
+                                        <h3 class="text-lg font-medium text-white mb-1"><i class="fa-solid fa-qrcode text-tgblue mr-2"></i> Get QR Code</h3>
+                                        <p class="text-slate-400 text-sm md:text-base">Type <code class="bg-slate-900 text-tgblue px-2 py-0.5 rounded font-mono border border-slate-700">/balance</code> in the bot to get our official UPI QR code.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-start gap-6">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-800 text-slate-300 border-2 border-slate-700 flex items-center justify-center font-bold text-lg shrink-0 z-10">2</div>
+                                    <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 w-full hover:border-slate-600 transition-colors">
+                                        <h3 class="text-lg font-medium text-white mb-1"><i class="fa-solid fa-mobile-screen-button text-tgblue mr-2"></i> Scan & Pay</h3>
+                                        <p class="text-slate-400 text-sm md:text-base">Scan the QR code using any UPI app (PhonePe, GPay, Paytm, etc.) and pay the exact amount you wish to add.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-start gap-6">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-800 text-slate-300 border-2 border-slate-700 flex items-center justify-center font-bold text-lg shrink-0 z-10">3</div>
+                                    <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 w-full hover:border-slate-600 transition-colors">
+                                        <h3 class="text-lg font-medium text-white mb-1"><i class="fa-solid fa-camera-retro text-tgblue mr-2"></i> Take a Screenshot</h3>
+                                        <p class="text-slate-400 text-sm md:text-base">Once the payment is successful, take a clear screenshot of the transaction receipt showing the UPI reference/transaction ID.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-start gap-6">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-800 text-slate-300 border-2 border-slate-700 flex items-center justify-center font-bold text-lg shrink-0 z-10">4</div>
+                                    <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 w-full hover:border-slate-600 transition-colors">
+                                        <h3 class="text-lg font-medium text-white mb-1"><i class="fa-solid fa-cloud-arrow-up text-tgblue mr-2"></i> Upload Screenshot</h3>
+                                        <p class="text-slate-400 text-sm md:text-base">Click the <strong>"Upload Screenshot"</strong> button located below the QR code in the bot. It will open a webpage where you need to upload your payment screenshot.</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-start gap-6">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-800 text-slate-300 border-2 border-slate-700 flex items-center justify-center font-bold text-lg shrink-0 z-10">5</div>
+                                    <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 w-full hover:border-slate-600 transition-colors">
+                                        <h3 class="text-lg font-medium text-white mb-1"><i class="fa-solid fa-clock-rotate-left text-tgblue mr-2"></i> Now wait for Verification</h3>
+                                        <p class="text-slate-400 text-sm md:text-base">After verification is complete, we will update your balance and send you a notification in the bot. You can then use this balance to buy study notes!</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3: Refer & Earn -->
+            <div class="accordion-item glass-card rounded-3xl overflow-hidden shadow-2xl relative group border border-slate-700/50">
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl -z-10 group-hover:bg-emerald-500/10 transition-colors duration-700 pointer-events-none"></div>
+
+                <button class="accordion-header w-full flex items-center justify-between p-6 md:p-8 cursor-pointer text-left transition-colors border-b border-transparent" onclick="toggleAccordion(this)">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-slate-800 text-emerald-400 flex items-center justify-center text-xl shadow-inner border border-slate-700 shrink-0">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <h2 class="text-2xl md:text-3xl font-semibold">Refer & Earn</h2>
+                            <span class="inline-flex px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold rounded-lg text-xs md:text-sm whitespace-nowrap w-fit">
+                                10% Commission
+                            </span>
+                        </div>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center border border-slate-700 shrink-0 transition-colors group-hover:text-white">
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300 chevron-icon"></i>
+                    </div>
+                </button>
+                
+                <div class="accordion-content">
+                    <div class="overflow-hidden">
+                        <div class="p-6 md:p-8 pt-2 md:pt-4">
+                            
+                            <!-- Referral Link Box -->
+                            <div class="mb-8 bg-slate-800/80 p-5 rounded-2xl border border-slate-700 flex flex-col sm:flex-row items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-slate-700/50 text-tgblue flex items-center justify-center text-xl shrink-0">
+                                    <i class="fa-solid fa-link"></i>
+                                </div>
+                                <div class="flex-grow w-full">
+                                    <p class="text-sm text-slate-300 mb-2 font-medium">Your Unique Referral Link</p>
+                                    <div class="flex items-center bg-slate-900 rounded-lg border border-slate-700 overflow-hidden focus-within:border-tgblue transition-colors">
+                                        <input type="text" id="referUrl" class="bg-transparent text-emerald-400 px-4 py-2.5 w-full outline-none text-sm font-mono tracking-wide" readonly>
+                                        <button onclick="copyReferralLink()" class="px-5 py-2.5 bg-tgblue hover:bg-tgblue-dark text-white transition-colors flex items-center justify-center border-l border-slate-700 group" title="Copy Link">
+                                            <i id="copyIcon" class="fa-regular fa-copy group-hover:scale-110 transition-transform"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <!-- Box 1 -->
+                                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:bg-slate-800 transition-colors text-center">
+                                    <div class="w-14 h-14 mx-auto rounded-full bg-slate-700 flex items-center justify-center text-2xl text-tgblue mb-4">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-white mb-2">1. Invite a Friend</h3>
+                                    <p class="text-slate-400 text-sm">Share your referral link with friends, classmates or in study groups.</p>
+                                </div>
+                                
+                                <!-- Box 2 -->
+                                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:bg-slate-800 transition-colors text-center">
+                                    <div class="w-14 h-14 mx-auto rounded-full bg-slate-700 flex items-center justify-center text-2xl text-emerald-400 mb-4">
+                                        <i class="fa-solid fa-percent"></i>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-white mb-2">2. They Buy Notes</h3>
+                                    <p class="text-slate-400 text-sm">When your friend uses the bot and purchases study notes, you earn a flat <span class="text-emerald-400 font-bold">10% commission</span> instantly.</p>
+                                </div>
+
+                                <!-- Box 3 -->
+                                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:bg-slate-800 transition-colors text-center">
+                                    <div class="w-14 h-14 mx-auto rounded-full bg-slate-700 flex items-center justify-center text-2xl text-purple-400 mb-4">
+                                        <i class="fa-solid fa-money-bill-transfer"></i>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-white mb-2">3. Withdraw Funds</h3>
+                                    <p class="text-slate-400 text-sm">Earn a minimum of <span class="text-white font-bold">₹29</span> and request a direct withdrawal to your own UPI account.</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 bg-slate-800 rounded-xl p-4 border border-slate-700 flex items-start sm:items-center gap-3">
+                                <i class="fa-solid fa-circle-info text-tgblue mt-1 sm:mt-0"></i>
+                                <p class="text-slate-300 text-sm">
+                                    <strong>Note:</strong> Withdrawals are processed manually to your UPI ID or bank account. Please allow up to 6 hours for the amount after requesting a payout.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="mt-16 text-center text-slate-500 text-sm pb-10">
+            <p>&copy; <span id="year"></span> Dedicated to affordable education.</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- Set Dynamic Referral URL ---
+        function hexToString(hex) {
+    let str = '';
+    for (let i = 0; i < hex.length; i += 2) {
+        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    }
+    return str;
+}
+const whereis = new URLSearchParams(window.location.search);
+const incriptedata = whereis.get("inc") || '7b7d';
+const jsonString = hexToString(incriptedata);
+const user_Data = JSON.parse(jsonString);
+        let refer_url = user_Data.refer_url ?? "Not Found!"; 
+        document.getElementById('referUrl').value = refer_url;
+
+        // --- Accordion Logic ---
+        function toggleAccordion(button) {
+            const currentItem = button.closest('.accordion-item');
+            const container = document.getElementById('accordion-container');
+            const allItems = container.querySelectorAll('.accordion-item');
+
+            const isCurrentlyActive = currentItem.classList.contains('is-active');
+
+            // Close all items
+            allItems.forEach(item => {
+                item.classList.remove('is-active');
+            });
+
+            // If the clicked item wasn't active before, open it now
+            if (!isCurrentlyActive) {
+                currentItem.classList.add('is-active');
+            }
+        }
+
+        // --- Copy Link Logic ---
+        function copyReferralLink() {
+            const copyText = document.getElementById("referUrl");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            navigator.clipboard.writeText(copyText.value);
+            
+            // Temporary icon change for visual feedback
+            const copyIcon = document.getElementById("copyIcon");
+            copyIcon.className = "fa-solid fa-check";
+            
+            setTimeout(() => {
+                copyIcon.className = "fa-regular fa-copy group-hover:scale-110 transition-transform";
+            }, 2000);
+        }
+
+        // Set current year dynamically in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+  </html>
